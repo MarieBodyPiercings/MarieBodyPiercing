@@ -51,6 +51,10 @@
             --chip-checked-bg: rgba(238,195,109,0.2);
             --chip-checked-border: var(--accent);
             --warning-color: #e74c3c;
+            --promo-bg: linear-gradient(135deg, #f7971e, #ffd200);
+            --promo-text: #1a1a1a;
+            --star-color: #f1c40f;
+            --star-empty: #555;
         }
         .light-mode {
             --bg: #f5f5f5;
@@ -78,6 +82,7 @@
             --chip-checked-bg: rgba(209,167,83,0.15);
             --chip-checked-border: var(--accent);
             --warning-color: #c0392b;
+            --star-empty: #ddd;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -123,6 +128,8 @@
         .piercing-info strong { display: block; font-weight: 600; color: var(--text); font-size: 15px; }
         .piercing-info small { font-size: 11px; color: var(--text-secondary); }
         .piercing-price { font-weight: 600; color: var(--accent); text-align: right; font-size: 15px; white-space: nowrap; }
+        .piercing-price .preco-original { text-decoration: line-through; color: var(--text-secondary); font-weight: 400; font-size: 13px; margin-right: 4px; }
+        .piercing-price .preco-promocional { color: #f7971e; font-weight: 700; }
         .piercing-row { cursor: pointer; transition: background-color .2s; }
         .piercing-row:active { background-color: rgba(238,195,109,0.25); }
         .piercing-row.selected td { background-color: rgba(238,195,109,0.25); }
@@ -182,7 +189,8 @@
         .category-quick-links a:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
         footer { text-align: center; padding: 15px; background-color: var(--surface); font-size: 12px; color: var(--text-secondary); border-top: 1px solid var(--border); transition: background-color 0.3s; }
         .footer-links { margin-top: 5px; font-size: 11px; }
-        .footer-links a { color: var(--accent); text-decoration: none; } .footer-links a:hover { text-decoration: underline; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px dotted var(--text-secondary); }
+        .footer-links a:hover { color: var(--accent); border-bottom-color: var(--accent); }
         .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .lightbox-overlay.active { opacity: 1; pointer-events: auto; }
         .lightbox-content { max-width: 90vw; max-height: 90vh; position: relative; }
@@ -190,6 +198,136 @@
         .lightbox-close { position: absolute; top: -35px; right: 0; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; line-height: 1; }
         .domicilio-obs { font-size: 11px; color: var(--text-secondary); margin-top: 4px; line-height: 1.3; }
         .warning-text { color: var(--warning-color); font-weight: 500; margin-top: 6px; display: block; }
+
+        /* SELO PROMOÇÃO */
+        .badge-promo {
+            display: inline-block;
+            background: var(--promo-bg);
+            color: var(--promo-text);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 6px;
+            box-shadow: 0 2px 8px rgba(247, 151, 30, 0.3);
+            animation: pulse-promo 1.5s infinite;
+            vertical-align: middle;
+        }
+        .badge-promo i {
+            margin-right: 3px;
+        }
+        @keyframes pulse-promo {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .promo-banner {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a1a;
+            text-align: center;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 12px rgba(247, 151, 30, 0.4);
+            line-height: 1.4;
+        }
+        .promo-banner i {
+            margin-right: 8px;
+        }
+
+        /* FEEDBACK */
+        .feedback-section {
+            padding: 20px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        .feedback-card {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            transition: background 0.3s;
+        }
+        .feedback-card .subtitulo {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 4px;
+            margin: 10px 0 15px;
+        }
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 28px;
+            color: var(--star-empty);
+            cursor: pointer;
+            transition: color 0.2s, transform 0.1s;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input[type="radio"]:checked ~ label {
+            color: var(--star-color);
+        }
+        .star-rating label:active {
+            transform: scale(0.9);
+        }
+        .feedback-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background-color: var(--input-bg);
+            color: var(--text);
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .feedback-textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(238,195,109,0.2);
+        }
+        .btn-feedback {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, #25d366, #128C7E);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+        }
+        .btn-feedback:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+        }
+        .feedback-aviso {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 10px;
+        }
 
         /* Controle de quantidade inline */
         .qty-inline {
@@ -239,6 +377,9 @@
             .joia-option .joia-img img { width: 30px; height: 30px; }
             .carousel-card p { font-size: 12px; }
             .resumo { font-size: 13px; padding: 12px; }
+            .badge-promo { font-size: 8px; padding: 1px 6px; }
+            .promo-banner { font-size: 13px; padding: 8px 10px; }
+            .star-rating label { font-size: 24px; }
         }
     </style>
 </head>
@@ -340,23 +481,8 @@
                             <col>
                             <col style="width: 70px;">
                         </colgroup>
-                        <tbody>
-                        <tr class="piercing-row" data-id="or1" data-name="Lóbulo (joia inclusa)" data-preco="25"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Lobulo.jpg" alt="Lóbulo" loading="lazy"></td><td class="piercing-info"><strong>Lóbulo</strong><br><small>joia inclusa</small><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 25</td></tr>
-                        <tr class="piercing-row" data-id="or2" data-name="Lóbulo (Par, joia inclusa)" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Lobulo_Par.jpg" alt="Lóbulo (Par)" loading="lazy"></td><td class="piercing-info"><strong>Lóbulo (Par)</strong><br><small>joia inclusa</small><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="or3" data-name="Trâgus" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Tragus.jpg" alt="Trâgus" loading="lazy"></td><td class="piercing-info"><strong>Trâgus</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="or4" data-name="Anti-Trâgus" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Anti_Tragos.jpg" alt="Anti-Trâgus" loading="lazy"></td><td class="piercing-info"><strong>Anti-Trâgus</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="or5" data-name="Transversal" data-preco="60"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Transversal.jpg" alt="Transversal" loading="lazy"></td><td class="piercing-info"><strong>Transversal</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 60</td></tr>
-                        <tr class="piercing-row" data-id="or6" data-name="Hélix" data-preco="50"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Helix.jpg" alt="Hélix" loading="lazy"></td><td class="piercing-info"><strong>Hélix</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 50</td></tr>
-                        <tr class="piercing-row" data-id="or7" data-name="Anti-Hélix" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Anti_Helix.jpg" alt="Anti-Hélix" loading="lazy"></td><td class="piercing-info"><strong>Anti-Hélix</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="or8" data-name="Mid-Hélix" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Mid_Helix.jpg" alt="Mid-Hélix" loading="lazy"></td><td class="piercing-info"><strong>Mid-Hélix</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="or9" data-name="Daith" data-preco="45"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Daith.jpg" alt="Daith" loading="lazy"></td><td class="piercing-info"><strong>Daith</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 45</td></tr>
-                        <tr class="piercing-row" data-id="or10" data-name="Rook" data-preco="45"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Rook.jpg" alt="Rook" loading="lazy"></td><td class="piercing-info"><strong>Rook</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 45</td></tr>
-                        <tr class="piercing-row" data-id="or11" data-name="Snug" data-preco="35"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Snug.jpg" alt="Snug" loading="lazy"></td><td class="piercing-info"><strong>Snug</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 35</td></tr>
-                        <tr class="piercing-row" data-id="or12" data-name="Flat" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Flat.jpg" alt="Flat" loading="lazy"></td><td class="piercing-info"><strong>Flat</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="or13" data-name="Australiano" data-preco="75"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Australiano.jpg" alt="Australiano" loading="lazy"></td><td class="piercing-info"><strong>Australiano</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 75</td></tr>
-                        <tr class="piercing-row" data-id="or14" data-name="Californiano" data-preco="35"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Californiano.jpg" alt="Californiano" loading="lazy"></td><td class="piercing-info"><strong>Californiano</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 35</td></tr>
-                        <tr class="piercing-row" data-id="or15" data-name="Conch" data-preco="60"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Conch.jpg" alt="Conch" loading="lazy"></td><td class="piercing-info"><strong>Conch</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 60</td></tr>
-                    </tbody></table></div>
+                        <tbody></tbody>
+                    </table></div>
                 </div>
                 <!-- CORPO -->
                 <div id="corpo" class="category-section">
@@ -365,11 +491,8 @@
                         <colgroup>
                             <col style="width: 40px;"> <col style="width: 50px;"> <col> <col style="width: 70px;">
                         </colgroup>
-                        <tbody>
-                        <tr class="piercing-row" data-id="co1" data-name="Umbigo" data-preco="60"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Umbigo.jpg" alt="Umbigo" loading="lazy"></td><td class="piercing-info"><strong>Umbigo</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 60</td></tr>
-                        <tr class="piercing-row" data-id="co2" data-name="Mamilo" data-preco="50"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Mamilo.jpg" alt="Mamilo" loading="lazy"></td><td class="piercing-info"><strong>Mamilo</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 50</td></tr>
-                        <tr class="piercing-row" data-id="co3" data-name="Mamilo (Par)" data-preco="85"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Mamilo_Par.jpg" alt="Mamilo (Par)" loading="lazy"></td><td class="piercing-info"><strong>Mamilo (Par)</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 85</td></tr>
-                    </tbody></table></div>
+                        <tbody></tbody>
+                    </table></div>
                 </div>
                 <!-- BOCA -->
                 <div id="boca" class="category-section">
@@ -378,25 +501,8 @@
                         <colgroup>
                             <col style="width: 40px;"> <col style="width: 50px;"> <col> <col style="width: 70px;">
                         </colgroup>
-                        <tbody>
-                        <tr class="piercing-row" data-id="bo1" data-name="Ashley" data-preco="60"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Ashley.jpg" alt="Ashley" loading="lazy"></td><td class="piercing-info"><strong>Ashley</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 60</td></tr>
-                        <tr class="piercing-row" data-id="bo2" data-name="Double Ashley" data-preco="100"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Double_Ashley.jpg" alt="Double Ashley" loading="lazy"></td><td class="piercing-info"><strong>Double Ashley</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 100</td></tr>
-                        <tr class="piercing-row" data-id="bo3" data-name="Dolphin Bites" data-preco="65"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Dolphin_Bites.jpg" alt="Dolphin Bites" loading="lazy"></td><td class="piercing-info"><strong>Dolphin Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 65</td></tr>
-                        <tr class="piercing-row" data-id="bo4" data-name="Spider Bites" data-preco="65"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Spider_Bites.jpg" alt="Spider Bites" loading="lazy"></td><td class="piercing-info"><strong>Spider Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 65</td></tr>
-                        <tr class="piercing-row" data-id="bo5" data-name="Shark Bites" data-preco="100"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Shark_Bites.jpg" alt="Shark Bites" loading="lazy"></td><td class="piercing-info"><strong>Shark Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 100</td></tr>
-                        <tr class="piercing-row" data-id="bo6" data-name="Cyber Bites" data-preco="65"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Cyber_Bites.jpg" alt="Cyber Bites" loading="lazy"></td><td class="piercing-info"><strong>Cyber Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 65</td></tr>
-                        <tr class="piercing-row" data-id="bo7" data-name="Snake Bites" data-preco="55"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Snake_Bites.jpg" alt="Snake Bites" loading="lazy"></td><td class="piercing-info"><strong>Snake Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 55</td></tr>
-                        <tr class="piercing-row" data-id="bo8" data-name="Canine Bites" data-preco="100"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Canine_Bites.jpg" alt="Canine Bites" loading="lazy"></td><td class="piercing-info"><strong>Canine Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 100</td></tr>
-                        <tr class="piercing-row" data-id="bo9" data-name="Angel Bites" data-preco="75"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Angel_Bites.jpg" alt="Angel Bites" loading="lazy"></td><td class="piercing-info"><strong>Angel Bites</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 75</td></tr>
-                        <tr class="piercing-row" data-id="bo10" data-name="Angel Fangs" data-preco="75"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Angel_Fangs.jpg" alt="Angel Fangs" loading="lazy"></td><td class="piercing-info"><strong>Angel Fangs</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 75</td></tr>
-                        <tr class="piercing-row" data-id="bo11" data-name="Labret" data-preco="45"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Labret.jpg" alt="Labret" loading="lazy"></td><td class="piercing-info"><strong>Labret</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 45</td></tr>
-                        <tr class="piercing-row" data-id="bo12" data-name="Labret Lateral" data-preco="45"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Labret_Lateral.jpg" alt="Labret Lateral" loading="lazy"></td><td class="piercing-info"><strong>Labret Lateral</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 45</td></tr>
-                        <tr class="piercing-row" data-id="bo13" data-name="Vertical Labret" data-preco="50"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Vertical_Labret.jpg" alt="Vertical Labret" loading="lazy"></td><td class="piercing-info"><strong>Vertical Labret</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 50</td></tr>
-                        <tr class="piercing-row" data-id="bo14" data-name="Jestrum" data-preco="45"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Jestrum.jpg" alt="Jestrum" loading="lazy"></td><td class="piercing-info"><strong>Jestrum</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 45</td></tr>
-                        <tr class="piercing-row" data-id="bo15" data-name="Medusa" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Medusa.jpg" alt="Medusa" loading="lazy"></td><td class="piercing-info"><strong>Medusa</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="bo16" data-name="Madonna" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Madonna.jpg" alt="Madonna" loading="lazy"></td><td class="piercing-info"><strong>Madonna</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                        <tr class="piercing-row" data-id="bo17" data-name="Monroe" data-preco="40"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Monroe.jpg" alt="Monroe" loading="lazy"></td><td class="piercing-info"><strong>Monroe</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 40</td></tr>
-                    </tbody></table></div>
+                        <tbody></tbody>
+                    </table></div>
                 </div>
                 <!-- ROSTO -->
                 <div id="rosto" class="category-section">
@@ -405,15 +511,8 @@
                         <colgroup>
                             <col style="width: 40px;"> <col style="width: 50px;"> <col> <col style="width: 70px;">
                         </colgroup>
-                        <tbody>
-                        <tr class="piercing-row" data-id="ro1" data-name="Supercílio/Sobrancelha" data-preco="50"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Supercilio.jpg" alt="Supercílio/Sobrancelha" loading="lazy"></td><td class="piercing-info"><strong>Supercílio/Sobrancelha</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 50</td></tr>
-                        <tr class="piercing-row" data-id="ro2" data-name="Clown Eyes / Supercílio Duplo" data-preco="80"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Clown_Eyes.jpg" alt="Clown Eyes / Supercílio Duplo" loading="lazy"></td><td class="piercing-info"><strong>Clown Eyes / Supercílio Duplo</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 80</td></tr>
-                        <tr class="piercing-row" data-id="ro3" data-name="Nostril" data-preco="50"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Nostril.jpg" alt="Nostril" loading="lazy"></td><td class="piercing-info"><strong>Nostril</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 50</td></tr>
-                        <tr class="piercing-row" data-id="ro4" data-name="Duplo Nostril" data-preco="70"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Duplo_Nostril.jpg" alt="Duplo Nostril" loading="lazy"></td><td class="piercing-info"><strong>Duplo Nostril</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 70</td></tr>
-                        <tr class="piercing-row" data-id="ro5" data-name="Septo" data-preco="55"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Septo.jpg" alt="Septo" loading="lazy"></td><td class="piercing-info"><strong>Septo</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 55</td></tr>
-                        <tr class="piercing-row" data-id="ro6" data-name="Bridge" data-preco="70"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Bridge.jpg" alt="Bridge" loading="lazy"></td><td class="piercing-info"><strong>Bridge</strong><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 70</td></tr>
-                        <tr class="piercing-row" data-id="ro7" data-name="Surface" data-preco="130"><td><span class="check-mark"></span></td><td class="piercing-img"><img src="imagens/Surface.jpg" alt="Surface" loading="lazy"></td><td class="piercing-info"><strong>Surface</strong><br><small>Joia inclusa em Titânio</small><span class="qty-inline"><button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button></span></td><td class="piercing-price">R$ 130</td></tr>
-                    </tbody></table></div>
+                        <tbody></tbody>
+                    </table></div>
                 </div>
             </div>
 
@@ -470,7 +569,20 @@
                     </div>
                     <div class="form-group"><label for="disponibilidade"><i class="fas fa-calendar-alt"></i> Disponibilidade de horário (opcional)</label><div class="input-with-icon"><i class="fas fa-calendar-alt"></i><select id="disponibilidade"><option value="">Selecione</option><option value="Manhã">Manhã</option><option value="Tarde">Tarde</option><option value="Noite">Noite</option><option value="A combinar">A combinar</option></select></div></div>
                     <div class="form-group"><label for="como-conheceu"><i class="fas fa-search"></i> Como me conheceu? (opcional)</label><div class="input-with-icon"><i class="fas fa-search"></i><select id="como-conheceu"><option value="">Selecione</option><option value="Instagram">Instagram</option><option value="Indicação">Indicação</option><option value="TikTok">TikTok</option><option value="Google">Google</option><option value="Outro">Outro</option></select></div></div>
-                    <div class="form-group"><label for="historico"><i class="fas fa-notes-medical"></i> Histórico de piercings / alergias (opcional)</label><div class="input-with-icon"><i class="fas fa-notes-medical"></i><textarea id="historico" rows="2" placeholder="Conte-me..."></textarea></div></div>
+                    
+                    <!-- HISTÓRICO / ALERGIAS -->
+                    <div class="form-group">
+                        <label><i class="fas fa-notes-medical"></i> Possui histórico de piercings ou alergias?</label>
+                        <div class="chips-container" id="historico-chips">
+                            <label class="chip"><input type="radio" name="historico" value="nao" checked aria-label="Não"> Não</label>
+                            <label class="chip"><input type="radio" name="historico" value="sim" aria-label="Sim"> Sim</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="historico-texto-container" style="display:none;">
+                        <label for="historico"><i class="fas fa-notes-medical"></i> Descreva seu histórico ou alergias:</label>
+                        <div class="input-with-icon"><i class="fas fa-notes-medical"></i><textarea id="historico" rows="2" placeholder="Ex: alergia a níquel, piercing que inflamou, etc."></textarea></div>
+                    </div>
+
                     <button class="btn-whatsapp" id="btn-enviar"><i class="fab fa-whatsapp"></i> Enviar pedido pelo WhatsApp</button>
                     <p style="font-size:11px; margin-top:8px; color: var(--text-secondary); text-align:center;">Seus dados são usados apenas para o agendamento e não serão compartilhados.</p>
                 </div>
@@ -497,9 +609,53 @@
                     <button id="cuidadosNextBtn" aria-label="Próximo"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </section>
+
+            <!-- FEEDBACK -->
+            <section class="feedback-section">
+                <h2><i class="fas fa-comment-dots"></i> Deixe seu feedback</h2>
+                <div class="feedback-card">
+                    <p class="subtitulo">Sua opinião é muito importante para mim! Conte sobre sua experiência com o piercing, o atendimento ou o site.</p>
+                    
+                    <div class="form-group">
+                        <label for="feedback-nome"><i class="fas fa-user"></i> Seu nome (opcional)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="feedback-nome" placeholder="Como você se chama?">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-star"></i> Avaliação</label>
+                        <div class="star-rating" id="star-rating">
+                            <input type="radio" name="estrelas" id="star5" value="5">
+                            <label for="star5" title="5 estrelas"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="estrelas" id="star4" value="4">
+                            <label for="star4" title="4 estrelas"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="estrelas" id="star3" value="3">
+                            <label for="star3" title="3 estrelas"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="estrelas" id="star2" value="2">
+                            <label for="star2" title="2 estrelas"><i class="fas fa-star"></i></label>
+                            <input type="radio" name="estrelas" id="star1" value="1">
+                            <label for="star1" title="1 estrela"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedback-mensagem"><i class="fas fa-pen"></i> Sua mensagem</label>
+                        <textarea id="feedback-mensagem" class="feedback-textarea" placeholder="Compartilhe sua experiência, críticas, sugestões ou elogios..."></textarea>
+                    </div>
+
+                    <button class="btn-feedback" id="btn-feedback"><i class="fab fa-whatsapp"></i> Enviar feedback pelo WhatsApp</button>
+                    <p class="feedback-aviso">Seu feedback será tratado com todo o profissionalismo e pode ser utilizado para melhorar nossos serviços.</p>
+                </div>
+            </section>
         </main>
+
         <footer>
             <p>&copy; 2026 Marie Body Piercing.</p>
+            <p style="font-size: 11px; margin-top: 4px; color: var(--text-secondary);">
+                Site por <a href="https://www.instagram.com/demiurgodev/" target="_blank" rel="noopener noreferrer" class="footer-links">DemiurgoDev</a>
+            </p>
         </footer>
     </div>
 
@@ -507,52 +663,90 @@
         (function() {
             const NUMERO_WHATSAPP = '5584999888967';
             const selecionados = {};
-            // IDs dos piercings que têm joia inclusa (não obrigam descrição no "Outro")
             const JOIA_INCLUSA_IDS = ['or1', 'or2', 'ro7'];
 
+            // ----- PROMOÇÃO -----
+            const PRECOS_PROMOCIONAIS = {
+                'or6': 40,   // Hélix
+                'or9': 37,   // Daith
+                'bo6': 45,   // Cyber Bites
+                'co1': 52,   // Umbigo
+                'ro1': 46,   // Sobrancelha
+                'bo11': 39,  // Labret
+                'ro6': 52    // Bridge
+            };
+            const DATA_TERMINO_PROMO = '2026-08-20T23:59:59-03:00';
+
+            function promocaoAtiva() {
+                const agora = new Date();
+                const fim = new Date(DATA_TERMINO_PROMO);
+                return agora <= fim;
+            }
+
+            function getPrecoAtual(id, precoNormal) {
+                if (promocaoAtiva() && PRECOS_PROMOCIONAIS.hasOwnProperty(id)) {
+                    return PRECOS_PROMOCIONAIS[id];
+                }
+                return precoNormal;
+            }
+
+            function isPromocao(id) {
+                return promocaoAtiva() && PRECOS_PROMOCIONAIS.hasOwnProperty(id);
+            }
+
+            function isJoiaInclusa(id) {
+                return JOIA_INCLUSA_IDS.includes(id) || isPromocao(id);
+            }
+            // ---------------------
+
+            // Mapeamento especial para imagens de joias
+            const imagensEspeciais = {
+                'Microbell titânio': 'Joia_Microbell_Consultar_cores_disponiveis.jpg'
+            };
+
             const piercingConfig = {
-                or1: { mult: 1, opcoes: [] },
-                or2: { mult: 1, opcoes: [] },
-                ro7: { mult: 1, opcoes: [] },
-                or6: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                or7: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                or8: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                or13: { mult: 3, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                bo1: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                bo2: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                bo3: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                bo4: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                or3: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                or14: { mult: 3, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                or4: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                or12: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                bo5: { mult: 4, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                bo6: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                bo15: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                bo16: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                bo17: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'] },
-                or9: { mult: 1, opcoes: ['Bananinha', 'Segmentada'] },
-                or5: { mult: 1, opcoes: ['Barbell grande', 'Barbell titânio grande'] },
-                or10: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                or11: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                bo9: { mult: 2, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                bo13: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                bo14: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                ro1: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                ro2: { mult: 2, opcoes: ['Bananinha', 'Bananinha titânio'] },
-                or15: { mult: 1, opcoes: ['D-ring Conch', 'Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'] },
-                co1: { mult: 1, opcoes: ['Microbell', 'Microbell (Consultar cores disponiveis)', 'Microbell titânio'] },
-                co2: { mult: 1, opcoes: ['Barbell', 'Barbell titânio'] },
-                co3: { mult: 2, opcoes: ['Barbell', 'Barbell titânio'] },
-                ro6: { mult: 1, opcoes: ['Barbell', 'Barbell titânio'] },
-                bo7: { mult: 2, opcoes: ['Labret', 'Ferradura', 'Labret titânio'] },
-                bo8: { mult: 4, opcoes: ['Labret', 'Ferradura', 'Labret titânio'] },
-                bo10: { mult: 2, opcoes: ['Bananinha Versátil'] },
-                bo11: { mult: 1, opcoes: ['Labret', 'Ferradura', 'Ponto de luz', 'Segmentada', 'Labret titânio'] },
-                bo12: { mult: 1, opcoes: ['Labret', 'Ferradura', 'Ponto de luz', 'Segmentada', 'Labret titânio'] },
-                ro3: { mult: 1, opcoes: ['D-ring', 'Ponto de luz', 'Labret', 'Labret titânio'] },
-                ro4: { mult: 2, opcoes: ['D-ring', 'Ponto de luz', 'Labret', 'Labret titânio'] },
-                ro5: { mult: 1, opcoes: ['Ferradura', 'Segmentados', 'Ferradura de titânio'] }
+                or1: { mult: 1, opcoes: [], preco: 25, nome: 'Lóbulo (joia inclusa)' },
+                or2: { mult: 1, opcoes: [], preco: 40, nome: 'Lóbulo (Par, joia inclusa)' },
+                ro7: { mult: 1, opcoes: [], preco: 130, nome: 'Surface' },
+                or6: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 50, nome: 'Hélix' },
+                or7: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 40, nome: 'Anti-Hélix' },
+                or8: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 40, nome: 'Mid-Hélix' },
+                or13: { mult: 3, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 75, nome: 'Australiano' },
+                bo1: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 60, nome: 'Ashley' },
+                bo2: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 100, nome: 'Double Ashley' },
+                bo3: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 65, nome: 'Dolphin Bites' },
+                bo4: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 65, nome: 'Spider Bites' },
+                or3: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 40, nome: 'Trâgus' },
+                or14: { mult: 3, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 35, nome: 'Californiano' },
+                or4: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 40, nome: 'Anti-Trâgus' },
+                or12: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 40, nome: 'Flat' },
+                bo5: { mult: 4, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 100, nome: 'Shark Bites' },
+                bo6: { mult: 2, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 65, nome: 'Cyber Bites' },
+                bo15: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 40, nome: 'Medusa' },
+                bo16: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 40, nome: 'Madonna' },
+                bo17: { mult: 1, opcoes: ['Ponto de luz', 'Labret', 'Labret titânio'], preco: 40, nome: 'Monroe' },
+                or9: { mult: 1, opcoes: ['Bananinha', 'Segmentada'], preco: 45, nome: 'Daith' },
+                or5: { mult: 1, opcoes: ['Barbell grande', 'Barbell titânio grande'], preco: 60, nome: 'Transversal' },
+                or10: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 45, nome: 'Rook' },
+                or11: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 35, nome: 'Snug' },
+                bo9: { mult: 2, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 75, nome: 'Angel Bites' },
+                bo13: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 50, nome: 'Vertical Labret' },
+                bo14: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 45, nome: 'Jestrum' },
+                ro1: { mult: 1, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 50, nome: 'Supercílio/Sobrancelha' },
+                ro2: { mult: 2, opcoes: ['Bananinha', 'Bananinha titânio'], preco: 80, nome: 'Clown Eyes / Supercílio Duplo' },
+                or15: { mult: 1, opcoes: ['D-ring Conch', 'Ponto de luz', 'Labret', 'Segmentada', 'Labret titânio'], preco: 60, nome: 'Conch' },
+                co1: { mult: 1, opcoes: ['Microbell', 'Microbell titânio'], preco: 60, nome: 'Umbigo' },
+                co2: { mult: 1, opcoes: ['Barbell', 'Barbell titânio'], preco: 50, nome: 'Mamilo' },
+                co3: { mult: 2, opcoes: ['Barbell', 'Barbell titânio'], preco: 85, nome: 'Mamilo (Par)' },
+                ro6: { mult: 1, opcoes: ['Barbell', 'Barbell titânio'], preco: 70, nome: 'Bridge' },
+                bo7: { mult: 2, opcoes: ['Labret', 'Ferradura', 'Labret titânio'], preco: 55, nome: 'Snake Bites' },
+                bo8: { mult: 4, opcoes: ['Labret', 'Ferradura', 'Labret titânio'], preco: 100, nome: 'Canine Bites' },
+                bo10: { mult: 2, opcoes: ['Bananinha Versátil'], preco: 75, nome: 'Angel Fangs' },
+                bo11: { mult: 1, opcoes: ['Labret', 'Ferradura', 'Ponto de luz', 'Segmentada', 'Labret titânio'], preco: 45, nome: 'Labret' },
+                bo12: { mult: 1, opcoes: ['Labret', 'Ferradura', 'Ponto de luz', 'Segmentada', 'Labret titânio'], preco: 45, nome: 'Labret Lateral' },
+                ro3: { mult: 1, opcoes: ['D-ring', 'Ponto de luz', 'Labret', 'Labret titânio'], preco: 50, nome: 'Nostril' },
+                ro4: { mult: 2, opcoes: ['D-ring', 'Ponto de luz', 'Labret', 'Labret titânio'], preco: 70, nome: 'Duplo Nostril' },
+                ro5: { mult: 1, opcoes: ['Ferradura', 'Segmentados', 'Ferradura de titânio'], preco: 55, nome: 'Septo' }
             };
 
             const joiasPrecos = {
@@ -567,7 +761,6 @@
                 'D-ring': 16,
                 'D-ring Conch': 25,
                 'Microbell': 10,
-                'Microbell (Consultar cores disponiveis)': 15,
                 'Microbell titânio': 35,
                 'Barbell': 10,
                 'Barbell titânio': 30,
@@ -585,19 +778,114 @@
                     .replace(/^_|_$/g, '');
             }
 
+            function getImagemJoia(nome) {
+                if (imagensEspeciais[nome]) {
+                    return imagensEspeciais[nome];
+                }
+                const base = sanitizeJoiaNome(nome);
+                return base ? `Joia_${base}.jpg` : '';
+            }
+
             function getJoiasForPiercing(id) {
+                if (isJoiaInclusa(id)) {
+                    return [];
+                }
                 const config = piercingConfig[id];
                 if (!config) return [];
-                // Adiciona opção "Outro" para todos, inclusive os com joia inclusa
                 const opcoes = config.opcoes.map(nome => {
                     const precoUnit = joiasPrecos[nome] || 0;
                     const precoTotal = precoUnit * config.mult;
-                    const img = nome ? `Joia_${sanitizeJoiaNome(nome)}.jpg` : '';
+                    const img = getImagemJoia(nome);
                     return { value: sanitizeJoiaNome(nome), label: nome, preco: precoTotal, img: img };
                 });
                 opcoes.sort((a, b) => b.preco - a.preco);
                 opcoes.push({ value: 'outro', label: 'Outro (descreva)', preco: 0, img: '' });
                 return opcoes;
+            }
+
+            function montarTabelas() {
+                const categorias = {
+                    orelha: { id: 'orelha', ids: ['or1','or2','or3','or4','or5','or6','or7','or8','or9','or10','or11','or12','or13','or14','or15'] },
+                    corpo: { id: 'corpo', ids: ['co1','co2','co3'] },
+                    boca: { id: 'boca', ids: ['bo1','bo2','bo3','bo4','bo5','bo6','bo7','bo8','bo9','bo10','bo11','bo12','bo13','bo14','bo15','bo16','bo17'] },
+                    rosto: { id: 'rosto', ids: ['ro1','ro2','ro3','ro4','ro5','ro6','ro7'] }
+                };
+
+                // Banner de promoção
+                const existingBanner = document.querySelector('.promo-banner');
+                if (promocaoAtiva()) {
+                    if (!existingBanner) {
+                        const banner = document.createElement('div');
+                        banner.className = 'promo-banner';
+                        banner.innerHTML = '🔥 PROMO DAS MAIS PEDIDAS: JOIAS INCLUSAS EM TODOS OS PIERCINGS DA PROMOÇÃO!';
+                        document.querySelector('#categorias').prepend(banner);
+                    }
+                } else {
+                    if (existingBanner) existingBanner.remove();
+                }
+
+                for (const [cat, data] of Object.entries(categorias)) {
+                    const tbody = document.querySelector(`#${data.id} tbody`);
+                    if (!tbody) continue;
+                    tbody.innerHTML = '';
+                    data.ids.forEach(id => {
+                        const config = piercingConfig[id];
+                        if (!config) return;
+                        const precoNormal = config.preco;
+                        const precoAtual = getPrecoAtual(id, precoNormal);
+                        const emPromocao = isPromocao(id);
+                        const joiaInclusa = isJoiaInclusa(id);
+                        
+                        let precoHtml;
+                        if (emPromocao) {
+                            precoHtml = `<span class="preco-original">R$ ${precoNormal.toFixed(2)}</span> <span class="preco-promocional">R$ ${precoAtual.toFixed(2)}</span>`;
+                        } else {
+                            precoHtml = `R$ ${precoAtual.toFixed(2)}`;
+                        }
+
+                        let badgeHtml = '';
+                        if (emPromocao) {
+                            badgeHtml = `<span class="badge-promo"><i class="fas fa-gift"></i> PROMO</span>`;
+                        } else if (joiaInclusa) {
+                            badgeHtml = `<span class="badge-promo" style="background: #555; color: #fff;"><i class="fas fa-gift"></i> JOIA INCLUSA</span>`;
+                        }
+
+                        const imgName = {
+                            'or1':'Lobulo','or2':'Lobulo_Par','or3':'Tragus','or4':'Anti_Tragos','or5':'Transversal',
+                            'or6':'Helix','or7':'Anti_Helix','or8':'Mid_Helix','or9':'Daith','or10':'Rook','or11':'Snug',
+                            'or12':'Flat','or13':'Australiano','or14':'Californiano','or15':'Conch',
+                            'co1':'Umbigo','co2':'Mamilo','co3':'Mamilo_Par',
+                            'bo1':'Ashley','bo2':'Double_Ashley','bo3':'Dolphin_Bites','bo4':'Spider_Bites','bo5':'Shark_Bites',
+                            'bo6':'Cyber_Bites','bo7':'Snake_Bites','bo8':'Canine_Bites','bo9':'Angel_Bites','bo10':'Angel_Fangs',
+                            'bo11':'Labret','bo12':'Labret_Lateral','bo13':'Vertical_Labret','bo14':'Jestrum','bo15':'Medusa',
+                            'bo16':'Madonna','bo17':'Monroe',
+                            'ro1':'Supercilio','ro2':'Clown_Eyes','ro3':'Nostril','ro4':'Duplo_Nostril','ro5':'Septo','ro6':'Bridge','ro7':'Surface'
+                        }[id] || id;
+
+                        const tr = document.createElement('tr');
+                        tr.className = 'piercing-row';
+                        tr.dataset.id = id;
+                        tr.dataset.name = config.nome;
+                        tr.dataset.preco = precoAtual;
+                        tr.dataset.joiaInclusa = joiaInclusa ? 'true' : 'false';
+                        tr.innerHTML = `
+                            <td><span class="check-mark"></span></td>
+                            <td class="piercing-img"><img src="imagens/${imgName}.jpg" alt="${config.nome}" loading="lazy"></td>
+                            <td class="piercing-info">
+                                <strong>${config.nome} ${badgeHtml}</strong>
+                                ${config.opcoes.length === 0 && config.nome.includes('joia inclusa') ? '<br><small>joia inclusa</small>' : ''}
+                                ${joiaInclusa && !emPromocao ? '<br><small>joia inclusa</small>' : ''}
+                                <span class="qty-inline">
+                                    <button class="qty-btn qty-minus" aria-label="Diminuir quantidade">−</button>
+                                    <span class="qty-num">1</span>
+                                    <button class="qty-btn qty-plus" aria-label="Aumentar quantidade">+</button>
+                                </span>
+                            </td>
+                            <td class="piercing-price">${precoHtml}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
             }
 
             // Lightbox
@@ -668,7 +956,30 @@
             setupChips('pronomes-chips', 'pronome-outro');
             setupChips('domicilio-chips');
 
-            // Domicílio toggle + "Outra localidade" toggle
+            // Histórico
+            const historicoChips = document.getElementById('historico-chips');
+            const historicoTextoContainer = document.getElementById('historico-texto-container');
+            if (historicoChips) {
+                historicoChips.addEventListener('click', function(e) {
+                    const chip = e.target.closest('.chip');
+                    if (!chip) return;
+                    const radio = chip.querySelector('input[type="radio"]');
+                    if (radio && radio.value === 'sim') {
+                        historicoTextoContainer.style.display = 'block';
+                    } else if (radio && radio.value === 'nao') {
+                        historicoTextoContainer.style.display = 'none';
+                        document.getElementById('historico').value = '';
+                    }
+                });
+                const selected = historicoChips.querySelector('input[type="radio"]:checked');
+                if (selected && selected.value === 'sim') {
+                    historicoTextoContainer.style.display = 'block';
+                } else {
+                    historicoTextoContainer.style.display = 'none';
+                }
+            }
+
+            // Domicílio
             document.querySelectorAll('input[name="domicilio"]').forEach(r => {
                 r.addEventListener('change', function() {
                     const show = this.value === 'sim';
@@ -699,7 +1010,7 @@
                 if (qtySpan) qtySpan.textContent = qty;
             }
 
-            // Eventos de clique nos botões + e -
+            // Eventos de quantidade
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.qty-btn');
                 if (!btn) return;
@@ -718,29 +1029,22 @@
                 atualizarResumo();
             });
 
-            // Piercing selection
-            document.querySelectorAll('.piercing-row').forEach(row => {
-                row.addEventListener('click', function(e) {
-                    if (e.target.closest('.joia-options') || e.target.closest('.piercing-img') || e.target.closest('.qty-btn')) return;
-                    const id = this.dataset.id;
-                    if (this.classList.contains('selected')) {
-                        this.classList.remove('selected');
-                        removerOpcoesJoia(this);
-                        delete selecionados[id];
-                    } else {
-                        this.classList.add('selected');
-                        // Agora todos têm opções (incluindo "Outro")
-                        const joias = getJoiasForPiercing(id);
-                        adicionarOpcoesJoia(this, joias);
-                    }
-                    atualizarResumo();
-                });
-            });
-
+            // Seleção de piercings
             function adicionarOpcoesJoia(row, joias) {
                 const id = row.dataset.id;
                 removerOpcoesJoia(row);
-                if (!joias || joias.length === 0) return; // segurança
+                if (!joias || joias.length === 0) {
+                    if (!selecionados[id]) {
+                        selecionados[id] = {
+                            row,
+                            quantidade: getQty(row),
+                            joiaTipo: null,
+                            joiaPreco: 0,
+                            joiaDescricao: ''
+                        };
+                    }
+                    return;
+                }
                 const tr = document.createElement('tr'); tr.className = 'joia-options-row'; tr.dataset.piercingId = id;
                 tr.innerHTML = `<td colspan="4"><div class="joia-options"><div class="joia-list">${joias.map((op, i) => {
                     const imgHtml = op.img ? `<div class="joia-img"><img src="imagens/${op.img}" alt="${op.label}" loading="lazy"></div>` : `<div class="joia-other-icon"><i class="fas fa-question"></i></div>`;
@@ -781,12 +1085,19 @@
                 cont.textContent = `Você selecionou ${totalQty} piercing(s) no total`;
                 let sm = '', jm = '', total = 0, warningMsg = '';
                 linhas.forEach(r => {
-                    const id = r.dataset.id, p = +r.dataset.preco;
+                    const id = r.dataset.id;
+                    const precoAtual = parseFloat(r.dataset.preco);
                     const qty = getQty(r);
-                    const subtotalBase = p * qty;
-                    total += subtotalBase;
-                    sm += `${qty}x ${r.dataset.name} – R$ ${subtotalBase.toFixed(2)}\n`;
-                    if (selecionados[id]) {
+                    const subtotal = precoAtual * qty;
+                    total += subtotal;
+                    const nome = r.dataset.name;
+                    const joiaInclusa = r.dataset.joiaInclusa === 'true';
+                    sm += `${qty}x ${nome} – R$ ${subtotal.toFixed(2)}`;
+                    if (joiaInclusa) {
+                        sm += ' (joia inclusa)';
+                    }
+                    sm += '\n';
+                    if (selecionados[id] && !joiaInclusa) {
                         const j = selecionados[id];
                         if (j.joiaTipo !== null && j.joiaTipo !== undefined) {
                             const joiaSubtotal = j.joiaPreco * qty;
@@ -798,9 +1109,8 @@
                             } else if (j.joiaTipo === 'outro') {
                                 const desc = j.joiaDescricao.trim() || '(não descrita)';
                                 jm += `   ↳ Joia personalizada: ${desc}\n`;
-                                // Aviso apenas se NÃO for joia inclusa
-                                if (!JOIA_INCLUSA_IDS.includes(id) && !j.joiaDescricao.trim()) {
-                                    warningMsg += `⚠️ Descreva a joia personalizada para "${r.dataset.name}".\n`;
+                                if (!j.joiaDescricao.trim()) {
+                                    warningMsg += `⚠️ Descreva a joia personalizada para "${nome}".\n`;
                                 }
                             }
                         }
@@ -830,7 +1140,11 @@
             function gerarMensagem() {
                 const nome = document.getElementById('nome').value.trim();
                 const pron = (() => { const r = document.querySelector('input[name="pronome"]:checked'); return r?.value === 'outro' ? document.getElementById('pronome-outro').value.trim() : (r?.value||''); })();
-                const disp = document.getElementById('disponibilidade').value, como = document.getElementById('como-conheceu').value, hist = document.getElementById('historico').value.trim();
+                const disp = document.getElementById('disponibilidade').value, como = document.getElementById('como-conheceu').value;
+                const historicoRadio = document.querySelector('input[name="historico"]:checked');
+                const temHistorico = historicoRadio && historicoRadio.value === 'sim';
+                const historicoTexto = temHistorico ? document.getElementById('historico').value.trim() : '';
+
                 const domSim = document.querySelector('input[name="domicilio"]:checked')?.value === 'sim';
                 const selDom = document.getElementById('bairro-cidade'), domOpt = selDom.options[selDom.selectedIndex];
                 const isOutra = selDom.value === 'Outra (verificar)';
@@ -841,15 +1155,22 @@
                     taxaDom = isOutra ? 0 : (+domOpt.dataset.preco || 0);
                     localDesc = isOutra ? `"${outraInput.value.trim()}" (a combinar)` : domOpt.text.split(' – ')[0];
                 }
+
                 let msg = `Olá, Marie! 🌸\n\nMe chamo *${nome}*${pron ? ' ('+pron+')' : ''}.\n\nQuero furar:\n`;
                 let total = 0;
                 document.querySelectorAll('.piercing-row.selected').forEach(r => {
-                    const id = r.dataset.id, pb = +r.dataset.preco;
+                    const id = r.dataset.id;
+                    const precoAtual = parseFloat(r.dataset.preco);
                     const qty = getQty(r);
-                    const subtotalBase = pb * qty;
-                    total += subtotalBase;
-                    msg += `➤ ${qty}x ${r.dataset.name} (R$ ${pb.toFixed(2)} cada, subtotal R$ ${subtotalBase.toFixed(2)})`;
-                    if (selecionados[id] && selecionados[id].joiaTipo !== null && selecionados[id].joiaTipo !== undefined) {
+                    const subtotal = precoAtual * qty;
+                    total += subtotal;
+                    const nomePiercing = r.dataset.name;
+                    const joiaInclusa = r.dataset.joiaInclusa === 'true';
+                    msg += `➤ ${qty}x ${nomePiercing} (R$ ${precoAtual.toFixed(2)} cada, subtotal R$ ${subtotal.toFixed(2)})`;
+                    if (joiaInclusa) {
+                        msg += ' - joia inclusa!';
+                    }
+                    if (selecionados[id] && !joiaInclusa && selecionados[id].joiaTipo !== null && selecionados[id].joiaTipo !== undefined) {
                         const j = selecionados[id];
                         const joiaSubtotal = j.joiaPreco * qty;
                         total += joiaSubtotal;
@@ -868,25 +1189,32 @@
                     else msg += `\n🚗 Atendimento domiciliar: ${localDesc}`;
                 }
                 msg += `\n💰 *Total: R$ ${total.toFixed(2)}*\n`;
-                if (disp) msg += `\n⏰ Preferência: ${disp}`; if (como) msg += `\n🔍 Me conheceu via: ${como}`; if (hist) msg += `\n📋 Histórico:\n${hist}`;
-                msg += `\n\nAguardo seu retorno! 💎`; return msg;
+                if (disp) msg += `\n⏰ Preferência: ${disp}`;
+                if (como) msg += `\n🔍 Me conheceu via: ${como}`;
+                if (temHistorico && historicoTexto) {
+                    msg += `\n📋 Histórico/Alergias:\n${historicoTexto}`;
+                } else if (temHistorico && !historicoTexto) {
+                    msg += `\n📋 Possui histórico/alergias, mas não descreveu.`;
+                } else {
+                    msg += `\n📋 Sem histórico/alergias informado.`;
+                }
+                msg += `\n\nAguardo seu retorno! 💎`;
+                return msg;
             }
 
+            // Botão enviar pedido
             document.getElementById('btn-enviar').addEventListener('click', () => {
                 if (!document.getElementById('nome').value.trim()) return alert('Preencha seu nome.');
                 if (!document.querySelectorAll('.piercing-row.selected').length) return alert('Selecione ao menos um piercing.');
 
-                // Validação: joia "outro" sem descrição (exceto para joia inclusa)
                 for (const [id, data] of Object.entries(selecionados)) {
                     if (data.joiaTipo === 'outro' && !data.joiaDescricao.trim()) {
-                        // Se o piercing estiver na lista de joia inclusa, pula a validação
                         if (JOIA_INCLUSA_IDS.includes(id)) continue;
                         const nomePiercing = data.row.dataset.name;
                         return alert(`Por favor, descreva a joia personalizada para o piercing "${nomePiercing}".`);
                     }
                 }
 
-                // Validação: domicílio inválido
                 const isDom = document.querySelector('input[name="domicilio"]:checked')?.value === 'sim';
                 if (isDom) {
                     const sel = document.getElementById('bairro-cidade');
@@ -900,11 +1228,48 @@
                 window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(gerarMensagem())}`, '_blank');
             });
 
+            // Botão enviar feedback
+            document.getElementById('btn-feedback').addEventListener('click', function() {
+                const nomeFeedback = document.getElementById('feedback-nome').value.trim() || 'Anônimo';
+                const estrelaSelecionada = document.querySelector('input[name="estrelas"]:checked');
+                const estrelas = estrelaSelecionada ? estrelaSelecionada.value : 'Não avaliado';
+                const mensagemFeedback = document.getElementById('feedback-mensagem').value.trim();
+
+                let texto = `Olá, Marie! 🌸\n\nTenho um feedback para você:\n\n`;
+                texto += `*Nome:* ${nomeFeedback}\n`;
+                texto += `*Avaliação:* ${estrelas} ⭐\n\n`;
+                texto += `*Mensagem:*\n${mensagemFeedback || 'Sem mensagem adicional.'}\n\n`;
+                texto += `Agradeço pela atenção! 💎`;
+
+                window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(texto)}`, '_blank');
+            });
+
             document.querySelectorAll('input[name="pronome"]').forEach(r => r.addEventListener('change', function() {
                 document.getElementById('pronome-outro').style.display = this.value === 'outro' ? 'block' : 'none';
             }));
 
+            // Inicialização
+            montarTabelas();
             atualizarResumo();
+
+            // Reatribuir eventos de clique após montar tabelas
+            document.querySelectorAll('.piercing-row').forEach(row => {
+                row.addEventListener('click', function(e) {
+                    if (e.target.closest('.joia-options') || e.target.closest('.piercing-img') || e.target.closest('.qty-btn')) return;
+                    const id = this.dataset.id;
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        removerOpcoesJoia(this);
+                        delete selecionados[id];
+                    } else {
+                        this.classList.add('selected');
+                        const joias = getJoiasForPiercing(id);
+                        adicionarOpcoesJoia(this, joias);
+                    }
+                    atualizarResumo();
+                });
+            });
+
         })();
     </script>
 </body>
